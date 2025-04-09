@@ -1,76 +1,77 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title> Nurfans </title>
-    </head>
-    <body>
-        <form action="Action.php" method="POST" onsubmit="return confirmSubmit()">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health & Wellness Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
 
-            <!-- Name : Text -->
-            <label for="name"> Enter Your Full Name: </label>
-            <input name="name" type="text" value="<?php $_POST["name"] ?? ""; ?>"> 
-            <br>
+  <form action="/submit-health-info" method="post">
+    <h2>Health & Wellness Survey</h2>
 
-            <!-- Email : Email -->
-            <label for="email"> Enter Your Email Address: </label>
-            <input name="email" type="email" value="<?php $email; ?>"> <!-- Test -->
-            <br>
+    <label for="diet">What's your current dietary situation?</label>
+    <select id="diet" name="diet">
+      <option value="balanced">Balanced</option>
+      <option value="vegetarian">Vegetarian</option>
+      <option value="vegan">Vegan</option>
+      <option value="keto">Keto</option>
+      <option value="intermittent-fasting">Intermittent Fasting</option>
+      <option value="other">Other</option>
+    </select>
 
-            <!-- Subscription Preferences : Checkbox -->
-            <label for="subscriptionPreference"> List Your Subscription Preferences: </label>
-            
-            <input name="preferences[]" type="checkbox" value="technology" <?php if (!empty($Preferences) && in_array("technology", $Preferences)) echo "checked"; ?>>
-            <label> Technology </label>
-            
-            <input name="preferences[]" type="checkbox" value="sports" <?php if (!empty($Preferences) && in_array("sports", $Preferences)) echo "checked"; ?>>
-            <label> Sports </label>
-            
-            <input name="preferences[]" type="checkbox" value="business" <?php if (!empty($Preferences) && in_array("business", $Preferences)) echo "checked"; ?>>
-            <label> Business </label>
-            
-            <input name="preferences[]" type="checkbox" value="health" <?php if (!empty($Preferences) && in_array("health", $Preferences)) echo "checked"; ?>>
-            <label> Health & Wellness </label>
-            
-            <input name="preferences[]" type="checkbox" value="entertainment" <?php if (!empty($Preferences) && in_array("entertainment", $Preferences)) echo "checked"; ?>>
-            <label> Entertainment </label>
-            <br>
+    <label for="exercise">How many times do you exercise per week?</label>
+    <input type="number" id="exercise" name="exercise" min="0" max="14" placeholder="e.g. 3">
 
-            <!-- Subscription Plan : Radio -->
-            <label> List Your Subscription Plans: </label> <br>
-            <input type="radio" name="subscriptionPlan[]" value="free" id="free">
-            <label for="free">Free Plan</label><br>
-            <input type="radio" name="subscriptionPlan[]" value="premium" id="premium">
-            <label for="premium">Premium Plan</label>
-            <br>
+    <label for="sleep">How many hours of sleep do you get on average?</label>
+    <input type="number" id="sleep" name="sleep" min="0" max="24" step="0.5" placeholder="e.g. 7.5">
 
-            <!-- Contact Method : Dropdown -->
-            <label for="contactMethod"> Prefrred Contact Method: </label>
-            <select name="contactMethod"> 
-                <option name="emailOption"> Email </option>
-                <option name="smsOption"> SMS </option>
-                <option name="bothOption"> Email & SMS </option>
-            </select> 
-            <br>
+    <label for="goals">Do you have any specific health goals?</label>
+    <textarea id="goals" name="goals" rows="4" placeholder="Lose weight, gain muscle, more energy, etc."></textarea>
 
-            <!-- Terms & Conditions : Checkbox -->
-            <label for="termsAgreement"> Terms & Conditions Agreement: </label>
-            <label for="termsAgreement"> Agree </label>
-            <input name="termsAgreement" type="checkbox" value="accepted">
-            <br>
+    <label for="allergies">Do you have any allergies or dietary restrictions?</label>
+    <textarea id="allergies" name="allergies" rows="3" placeholder="Gluten, peanuts, dairy, etc."></textarea>
 
-            <!-- Submit and Clear Buttons -->
-            <button type="submit" name="submit" value="submit"> Submit Form </button>
-            <button type="reset" name="clear" value="clear"> Clear Form </button>
+    <button type="submit">Submit</button>
+  </form>
 
-        </form>
-        
-            <script>
-            function confirmSubmit() {
-                return confirm("Matte Kudasai! Are you sure you want to submit?");
-            }
-            </script>
-
-    </body>
+</body>
 </html>
-
-<!-- ADD STICKY FIELDs -->
