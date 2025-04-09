@@ -53,7 +53,7 @@
 <body>
 
     <!-- For Arthur: Make all the fields required, unless said otherwise -->
-  <form action="Action.php" method="post">
+  <form action="ActionPreference.php" method="post">
     <h2>Health & Wellness Survey</h2>
 
     <label for="diet">What's your current dietary situation?</label>
