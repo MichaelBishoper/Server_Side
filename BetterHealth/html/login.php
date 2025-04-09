@@ -1,77 +1,80 @@
+<?php
+session_start();
+
+// Get old inputs or set defaults
+$name = $_SESSION['old']['name'] ?? '';
+$email = $_SESSION['old']['email'] ?? '';
+$preferences = $_SESSION['old']['preferences'] ?? [];
+$subscriptionPlan = $_SESSION['old']['subscriptionPlan'] ?? '';
+$contactMethod = $_SESSION['old']['contactMethod'] ?? '';
+$termsAgreement = $_SESSION['old']['termsAgreement'] ?? false;
+$errors = $_SESSION['errors'] ?? [];
+
+// Clear old session data after use
+unset($_SESSION['old'], $_SESSION['errors']);
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Health & Wellness Survey</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f4f4f4;
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 500px;
-      margin: auto;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 10px;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-  </style>
+  <title>Nurfans</title>
 </head>
 <body>
+  <?php if (!empty($errors)): ?>
+    <ul style="color: red;">
+      <?php foreach ($errors as $error): ?>
+        <li><?php echo htmlspecialchars($error); ?></li>
+      <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
 
-  <form action="/submit-health-info" method="post">
-    <h2>Health & Wellness Survey</h2>
+  <form action="action.php" method="POST" onsubmit="return confirmSubmit()">
 
-    <label for="diet">What's your current dietary situation?</label>
-    <select id="diet" name="diet">
-      <option value="balanced">Balanced</option>
-      <option value="vegetarian">Vegetarian</option>
-      <option value="vegan">Vegan</option>
-      <option value="keto">Keto</option>
-      <option value="intermittent-fasting">Intermittent Fasting</option>
-      <option value="other">Other</option>
+    <label for="name">Enter Your Full Name:</label>
+    <input name="name" type="text" value="<?php echo htmlspecialchars($name); ?>">
+    <br>
+
+    <label for="email">Enter Your Email Address:</label>
+    <input name="email" type="email" value="<?php echo htmlspecialchars($email); ?>">
+    <br>
+
+    <label>List Your Subscription Preferences:</label><br>
+    <?php
+    $topics = ["technology", "sports", "business", "health", "entertainment"];
+    foreach ($topics as $topic) {
+        $checked = in_array($topic, $preferences) ? "checked" : "";
+        echo "<input name='preferences[]' type='checkbox' value='$topic' $checked> <label>" . ucfirst($topic) . "</label><br>";
+    }
+    ?>
+
+    <label>List Your Subscription Plans:</label><br>
+    <input type="radio" name="subscriptionPlan" value="free" id="free" <?php if ($subscriptionPlan === "free") echo "checked"; ?>>
+    <label for="free">Free Plan</label><br>
+    <input type="radio" name="subscriptionPlan" value="premium" id="premium" <?php if ($subscriptionPlan === "premium") echo "checked"; ?>>
+    <label for="premium">Premium Plan</label>
+    <br>
+
+    <label for="contactMethod">Preferred Contact Method:</label>
+    <select name="contactMethod">
+      <option value="Email" <?php if ($contactMethod === "Email") echo "selected"; ?>>Email</option>
+      <option value="SMS" <?php if ($contactMethod === "SMS") echo "selected"; ?>>SMS</option>
+      <option value="Email & SMS" <?php if ($contactMethod === "Email & SMS") echo "selected"; ?>>Email & SMS</option>
     </select>
+    <br>
 
-    <label for="exercise">How many times do you exercise per week?</label>
-    <input type="number" id="exercise" name="exercise" min="0" max="14" placeholder="e.g. 3">
+    <label for="termsAgreement">Terms & Conditions Agreement:</label>
+    <input name="termsAgreement" type="checkbox" value="accepted" <?php if ($termsAgreement) echo "checked"; ?>>
+    <label for="termsAgreement">Agree</label>
+    <br>
 
-    <label for="sleep">How many hours of sleep do you get on average?</label>
-    <input type="number" id="sleep" name="sleep" min="0" max="24" step="0.5" placeholder="e.g. 7.5">
-
-    <label for="goals">Do you have any specific health goals?</label>
-    <textarea id="goals" name="goals" rows="4" placeholder="Lose weight, gain muscle, more energy, etc."></textarea>
-
-    <label for="allergies">Do you have any allergies or dietary restrictions?</label>
-    <textarea id="allergies" name="allergies" rows="3" placeholder="Gluten, peanuts, dairy, etc."></textarea>
-
-    <button type="submit">Submit</button>
+    <button type="submit" name="submit" value="submit">Submit Form</button>
+    <button type="reset" name="clear" value="clear">Clear Form</button>
   </form>
 
+  <script>
+    function confirmSubmit() {
+      return confirm("Matte Kudasai! Are you sure you want to submit?");
+    }
+  </script>
 </body>
 </html>
