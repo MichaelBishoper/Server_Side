@@ -14,9 +14,7 @@ if ($conn->connect_error) {
 // Collect form data safely
 $name = trim($_POST['name'] ?? '');
 $email = trim($_POST['email'] ?? '');
-$preferences = $_POST['preferences'] ?? [];
-$subscriptionPlan = $_POST['subscriptionPlan'] ?? '';
-$contactMethod = $_POST['contactMethod'] ?? '';
+$password = trim($_POST['password'] ?? '');
 $termsAgreement = isset($_POST['termsAgreement']) ? 1 : 0;
 
 $errors = [];
@@ -24,9 +22,13 @@ $errors = [];
 // Basic validation
 if (empty($name)) $errors[] = "Name is required.";
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "A valid email is required.";
-if (!in_array($subscriptionPlan, ['free', 'premium'])) $errors[] = "Choose a valid subscription plan.";
-$validMethods = ['Email', 'SMS', 'Email & SMS'];
-if (!in_array($contactMethod, $validMethods)) $errors[] = "Choose a valid contact method.";
+if (empty($name)) $errors[] = "Name is required.";
+if (empty($password)) {
+    $errors[] = "Password is required.";
+} elseif (strlen($password) < 8) {
+    $errors[] = "Password must be at least 8 characters.";
+}
+
 if (!$termsAgreement) $errors[] = "You must agree to the terms.";
 
 // If errors, return to login.php with data
@@ -44,10 +46,6 @@ if (!empty($errors)) {
     exit;
 }
 
-// Filter valid preferences
-$allowedPrefs = ['technology', 'sports', 'business', 'health', 'entertainment'];
-$preferences = array_intersect($preferences, $allowedPrefs);
-$preferencesStr = implode(", ", $preferences);
 
 // Prepare and execute insert
 $sql = "INSERT INTO users (fullname, email, preferences, plan, contact_method, terms_agreed) VALUES (?, ?, ?, ?, ?, ?)";
@@ -59,6 +57,8 @@ if ($stmt->execute()) {
 } else {
     echo "❌ Failed to save data: " . $stmt->error;
 }
+
+
 
 $stmt->close();
 $conn->close();

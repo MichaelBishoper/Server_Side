@@ -38,29 +38,11 @@ unset($_SESSION['old'], $_SESSION['errors']);
     <input name="email" type="email" value="<?php echo htmlspecialchars($email); ?>">
     <br>
 
-    <label>List Your Subscription Preferences:</label><br>
-    <?php
-    $topics = ["technology", "sports", "business", "health", "entertainment"];
-    foreach ($topics as $topic) {
-        $checked = in_array($topic, $preferences) ? "checked" : "";
-        echo "<input name='preferences[]' type='checkbox' value='$topic' $checked> <label>" . ucfirst($topic) . "</label><br>";
-    }
-    ?>
-
-    <label>List Your Subscription Plans:</label><br>
-    <input type="radio" name="subscriptionPlan" value="free" id="free" <?php if ($subscriptionPlan === "free") echo "checked"; ?>>
-    <label for="free">Free Plan</label><br>
-    <input type="radio" name="subscriptionPlan" value="premium" id="premium" <?php if ($subscriptionPlan === "premium") echo "checked"; ?>>
-    <label for="premium">Premium Plan</label>
+    <label for="email">Enter Your Password:</label>
+    <input name="password" type="password" value="<?php echo htmlspecialchars($email); ?>">
     <br>
 
-    <label for="contactMethod">Preferred Contact Method:</label>
-    <select name="contactMethod">
-      <option value="Email" <?php if ($contactMethod === "Email") echo "selected"; ?>>Email</option>
-      <option value="SMS" <?php if ($contactMethod === "SMS") echo "selected"; ?>>SMS</option>
-      <option value="Email & SMS" <?php if ($contactMethod === "Email & SMS") echo "selected"; ?>>Email & SMS</option>
-    </select>
-    <br>
+
 
     <label for="termsAgreement">Terms & Conditions Agreement:</label>
     <input name="termsAgreement" type="checkbox" value="accepted" <?php if ($termsAgreement) echo "checked"; ?>>
