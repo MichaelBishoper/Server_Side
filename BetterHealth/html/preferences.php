@@ -19,6 +19,13 @@
     }
     h2 {
       text-align: center;
+      text-align: center;
+      width: 100%;
+      float: left;
+      font-size: 70px;
+      color:rgb(103, 37, 15);
+      font-weight: bold;
+      padding-bottom: 0px;
     }
     label {
       display: block;
@@ -45,7 +52,8 @@
 </head>
 <body>
 
-  <form action="/submit-health-info" method="post">
+    <!-- For Arthur: Make all the fields required, unless said otherwise -->
+  <form action="Action.php" method="post">
     <h2>Health & Wellness Survey</h2>
 
     <label for="diet">What's your current dietary situation?</label>
@@ -64,9 +72,11 @@
     <label for="sleep">How many hours of sleep do you get on average?</label>
     <input type="number" id="sleep" name="sleep" min="0" max="24" step="0.5" placeholder="e.g. 7.5">
 
+    <!-- Make this one not required -->
     <label for="goals">Do you have any specific health goals?</label>
     <textarea id="goals" name="goals" rows="4" placeholder="Lose weight, gain muscle, more energy, etc."></textarea>
 
+    <!-- Make this one not required -->
     <label for="allergies">Do you have any allergies or dietary restrictions?</label>
     <textarea id="allergies" name="allergies" rows="3" placeholder="Gluten, peanuts, dairy, etc."></textarea>
 
